@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASE</title>
+    <!-- <link
+      rel="stylesheet"
+      href="{% static 'css/navbar.css' %}"
+      type="text/css"
+    /> -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://bootstrapthemes.co/demo/resource/bootstrap-4-multi-dropdown-hover-navbar/css/bootstrap-4-hover-navbar.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light  btco-hover-menu">
+
+        <a class="navbar-brand" href="#"></a>
+    
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    
+            <span class="navbar-toggler-icon"></span>
+    
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    
+            <ul class="navbar-nav">   
+                {% for item in top_level_items %}
+                <li class="nav-item dropdown">    
+                    <!-- <a class="nav-link" href="{{ item.url }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                    <a class="nav-link" href="{{ item.url }}">
+                        {{ item.name }}    
+                    </a>
+
+                    {% if item.children.count > 0 %}
+                    <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+
+                        {% for child in item.children.all %}
+                        <li>
+                            <a href="{{ child.url }}">* {{ child.name }}</a>
+                            {% if child.children.count > 0 %}
+                            <ul>
+                                {% for grandchild in child.children.all %}
+                                    <li><a href="{{ grandchild.url }}">{{ grandchild.name }} **</a></li>
+                                {% endfor %}
+                                </ul>
+                                {% endif %}
+
+                        </li>       
+
+
+                        {% endfor %}                     
+    
+                    </ul>
+                    {% endif %}
+    
+                </li>
+    
+                {% endfor %}
+    
+            </ul>
+    
+        </div>
+    
+    </nav>
+</body>
+<!-- <script src="{% static 'js/navbar.js' %}"></script> -->
+</html>
